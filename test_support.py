@@ -94,7 +94,7 @@ def export():
             price  = int(w.trv.item(item, 'values')[2])
             total  = int(w.trv.item(item, 'values')[3])
             sum_t.append(total)
-            f.write(f'{str(name)},Rp.{str(amount)},Rp.{str(price)},Rp.{str(total)}\n')
+            f.write(f'{str(name)},{str(amount)},Rp.{str(price)},Rp.{str(total)}\n')
             
         f.write(f'\n\nTotal,,,Rp.{str(sum(sum_t))}')
         f.close()
