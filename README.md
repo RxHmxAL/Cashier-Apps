@@ -9,3 +9,5 @@ cara run programnya:
 	python3 test.py
 	atau
 	python3 test_suppport.py
+
+NB: file test.tcl buat di import di aplikasi PAGE.
