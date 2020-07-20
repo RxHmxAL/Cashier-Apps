@@ -7,6 +7,7 @@
 
 import sys
 import os
+import time
 try:
     import Tkinter as tk
     from tkinter import messagebox, filedialog
@@ -62,46 +63,65 @@ def add():
         print('test_support.add')
         sys.stdout.flush()
     except ValueError as e:
-        messagebox.showerror('Error', 'Invalid Input')
+        w.e_name.delete(0, 'end')
+        w.e_amount.delete(0, 'end')
+        w.e_price.delete(0, 'end')
+        messagebox.showwarning('Warning', 'Invalid Input')
         print(e)
 
+
 def exit():
-    print('test_support.exit')
-    sys.stdout.flush()
+    
     pop = messagebox.askquestion('Exit', 'Are You Sure?')
     if pop == 'no':
         pass
     else:
+        print('test_support.exit')
+        sys.stdout.flush()
         destroy_window()
 
         
+def check():
+    a = []
+    l_trv = w.trv.get_children()
+    for chill in l_trv:
+        a.append(chill)
+        if a == 0:
+            messagebox.showwarning('Warning','Canno\'t Export Empty Data')
+        else:
+            continue
 
 def export():
-
-    print('test_support.export')
-    sys.stdout.flush()
     
     sum_t = []
-    f = filedialog.asksaveasfile(mode = 'w+', filetypes = [('CSV', '.csv')])
     
-    if f == None:
-        pass
+
+    if len(w.trv.get_children()) == 0:
+        return messagebox.showwarning('Warning','Canno\'t Export Empty Data')
+    
     else:
-        f.write('Name,Amount,Price,Total\n\n')
-        for item in w.trv.get_children():
-            name   = w.trv.item(item, 'values')[0]
-            amount = int(w.trv.item(item, 'values')[1])
-            price  = int(w.trv.item(item, 'values')[2])
-            total  = int(w.trv.item(item, 'values')[3])
-            sum_t.append(total)
-            f.write(f'{str(name)},{str(amount)},Rp.{str(price)},Rp.{str(total)}\n')
-            
-        f.write(f'\n\nTotal,,,Rp.{str(sum(sum_t))}')
-        f.close()
+        f = filedialog.asksaveasfile(mode = 'w+', filetypes = [('CSV', '.csv')])
+        try:
+            f.write('Name,Amount,Price,Total\n\n')
+            for item in w.trv.get_children():
+                name   = w.trv.item(item, 'values')[0]
+                amount = int(w.trv.item(item, 'values')[1])
+                price  = int(w.trv.item(item, 'values')[2])
+                total  = int(w.trv.item(item, 'values')[3])
+                sum_t.append(total)
+                f.write(f'{str(name)},{str(amount)},Rp.{str(price)},Rp.{str(total)}\n')
+            f.write(f'\n\nTotal,,,Rp.{str(sum(sum_t))}')
+            f.close()
+            for a in w.trv.get_children():
+                w.trv.delete(a)
+            messagebox.showinfo('Success','Data Exported')
 
-        for a in w.trv.get_children():
-            w.trv.delete(a)
+        except:
+            pass
+        print('test_support.export')
+        sys.stdout.flush()
 
+    
     value_total()
 
 
@@ -111,14 +131,14 @@ def remove():
     if len(item_r) == 0:
         messagebox.showwarning('Warning', 'Select An Item')
     else:
-        pop = messagebox.askokcancel('Delete Item', 'Are You Sure?', icon = 'question')
+        pop = messagebox.askyesno('Delete Item', 'Are You Sure?', icon = 'question')
         if pop == True:
             w.trv.delete(item_r)
             messagebox._show('Success', 'Item Removed', icon = None)
-
+        print('test_support.remove')
+        sys.stdout.flush()
     value_total()
-    print('test_support.remove')
-    sys.stdout.flush()
+    
 
 
 def destroy_window():
@@ -135,6 +155,9 @@ def value_total():
     
     ev_total.set(f'Rp. {int(v_total)}')
     
+def handle_click(event):
+    if w.trv.identify_region(event.x, event.y) == "separator":
+        return "break"
 
 if __name__ == '__main__':
     import test
