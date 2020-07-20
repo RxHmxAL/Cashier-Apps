@@ -80,16 +80,6 @@ def exit():
         sys.stdout.flush()
         destroy_window()
 
-        
-def check():
-    a = []
-    l_trv = w.trv.get_children()
-    for chill in l_trv:
-        a.append(chill)
-        if a == 0:
-            messagebox.showwarning('Warning','Canno\'t Export Empty Data')
-        else:
-            continue
 
 def export():
     
