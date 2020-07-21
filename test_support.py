@@ -82,9 +82,6 @@ def exit():
 
 
 def export():
-    
-    sum_t = []
-    
 
     if len(w.trv.get_children()) == 0:
         return messagebox.showwarning('Warning','Canno\'t Export Empty Data')
@@ -145,9 +142,6 @@ def value_total():
     
     ev_total.set(f'Rp. {int(v_total)}')
     
-def handle_click(event):
-    if w.trv.identify_region(event.x, event.y) == "separator":
-        return "break"
 
 if __name__ == '__main__':
     import test
